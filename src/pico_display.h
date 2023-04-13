@@ -25,6 +25,8 @@ static const uint8_t DEF_LED_R = 0;
 static const uint8_t DEF_LED_G = 0;
 static const uint8_t DEF_LED_B = 0;
 
+static const uint16_t LED_PWM_WRAP = 255 * 255;
+
 typedef struct pico_display_config_spi
 {
   bool led_enab;

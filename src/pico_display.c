@@ -6,13 +6,13 @@
 #include "pico/stdlib.h"
 #include "hardware/pwm.h"
 
+#include "gamma.h"
+
 static void led_pwm_push(pico_display_led_t *led)
 {
-  // TODO apply gamma correction?
-
-  uint16_t red = (UINT16_MAX - led->led_r * led->brightness);
-  uint16_t green = (UINT16_MAX - led->led_g * led->brightness);
-  uint16_t blue = (UINT16_MAX - led->led_b * led->brightness);
+  uint16_t red = (UINT16_MAX - GAMMA_LUT_8[led->led_r] * led->brightness);
+  uint16_t green = (UINT16_MAX - GAMMA_LUT_8[led->led_g] * led->brightness);
+  uint16_t blue = (UINT16_MAX - GAMMA_LUT_8[led->led_b] * led->brightness);
 
   pwm_set_gpio_level(led->gpio_r, red);
   pwm_set_gpio_level(led->gpio_g, green);
@@ -41,7 +41,7 @@ static void led_init(pico_display_config_spi_t *config, pico_display_t *disp)
   gpio_set_dir(led.gpio_b, GPIO_OUT);
 
   pwm_config pwm_conf = pwm_get_default_config();
-  pwm_config_set_wrap(&pwm_conf, UINT16_MAX);
+  pwm_config_set_wrap(&pwm_conf, LED_PWM_WRAP);
 
   pwm_init(pwm_gpio_to_slice_num(led.gpio_r), &pwm_conf, true);
   pwm_init(pwm_gpio_to_slice_num(led.gpio_g), &pwm_conf, true);
