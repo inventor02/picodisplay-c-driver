@@ -1,11 +1,12 @@
-#pragma once
+#ifndef _GAMMA_H
+#define _GAMMA_H
 
 #include <stdint.h>
 
 // https://victornpb.github.io/gamma-table-generator/
 
 // gamma = 2.00, steps = 256, range = 0-255
-const uint8_t GAMMA_LUT_8[256] = {
+static const uint8_t GAMMA_LUT_8[256] = {
     0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   1,
     1,   1,   1,   1,   2,   2,   2,   2,   2,   2,   3,   3,   3,   3,   4,   4,
     4,   4,   5,   5,   5,   5,   6,   6,   6,   7,   7,   7,   8,   8,   8,   9,
@@ -26,7 +27,7 @@ const uint8_t GAMMA_LUT_8[256] = {
 
 // gamma = 2.80, steps = 256, range = 0-255
 // ref Pimoroni code uses gamma=2.8
-const uint8_t ST7789_GAMMA_LUT_8[256] = {
+static const uint8_t ST7789_GAMMA_LUT_8[256] = {
     0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,
     0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   1,   1,   1,   1,
     1,   1,   1,   1,   1,   1,   1,   1,   1,   2,   2,   2,   2,   2,   2,   2,
@@ -44,3 +45,5 @@ const uint8_t ST7789_GAMMA_LUT_8[256] = {
   177, 180, 182, 184, 186, 189, 191, 193, 196, 198, 200, 203, 205, 208, 210, 213,
   215, 218, 220, 223, 225, 228, 231, 233, 236, 239, 241, 244, 247, 249, 252, 255,
 };
+
+#endif

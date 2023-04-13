@@ -86,11 +86,11 @@ pico_display_config_spi_t pico_display_get_default_config()
   conf.btn_x = DEF_PIN_BTN_X;
   conf.btn_y = DEF_PIN_BTN_Y;
 
-  conf.bl_en = DEF_PIN_BL_EN;
+  conf.bl_en = DEF_PIN_LCD_BL_EN;
   conf.lcd_mosi = DEF_PIN_LCD_MOSI;
   conf.lcd_sclk = DEF_PIN_LCD_SCLK;
   conf.lcd_cs = DEF_PIN_LCD_CS;
-  conf.lcd_dc = DEF_PIN_LCD_DC;
+  conf.lcd_wr = DEF_PIN_LCD_WR;
 
   return conf;
 }

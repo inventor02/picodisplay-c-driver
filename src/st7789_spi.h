@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _ST7789_SPI_H
+#define _ST7789_SPI_H
 
 #include <stdint.h>
 #include <stdbool.h>
@@ -114,9 +115,9 @@ typedef struct st7789_config
 {
   spi_inst_t *spi;
   uint pin_cs;
-  uint pin_dc;
-  uint pin_sck;
+  uint pin_wr;
   uint pin_mosi;
+  uint pin_sclk;
 
   bool bl_enab;
   uint pin_bl;
@@ -126,9 +127,9 @@ typedef struct st7789
 {
   spi_inst_t *spi;
   uint pin_cs;
-  uint pin_dc;
-  uint pin_sck;
+  uint pin_wr;
   uint pin_mosi;
+  uint pin_sclk;
 
   bool bl_enab;
   uint pin_bl;
@@ -141,3 +142,5 @@ typedef uint16_t rgb565_frame_buffer_t[ST7789_FB_SIZE];
 st7789_t st7789_init(st7789_config_t *config);
 
 void st7789_set_backlight(st7789_t *st7789, uint8_t backlight);
+
+#endif
