@@ -1,5 +1,5 @@
-#ifndef _ST7789_SPI_H
-#define _ST7789_SPI_H
+#ifndef PDCD_ST7789_INCLUDED
+#define PDCD_ST7789_INCLUDED
 
 #include <stdint.h>
 #include <stdbool.h>

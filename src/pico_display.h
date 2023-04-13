@@ -1,5 +1,5 @@
-#ifndef _PICO_DISPLAY_H
-#define _PICO_DISPLAY_H
+#ifndef PDCD_PICO_DISPLAY_INCLUDED
+#define PDCD_PICO_DISPLAY_INCLUDED
 
 #include <stdbool.h>
 #include <stdint.h>
