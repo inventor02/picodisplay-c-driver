@@ -7,8 +7,8 @@
 #include "pico/stdlib.h"
 #include "hardware/spi.h"
 
-#define ST7789_WIDTH    240
-#define ST7789_HEIGHT   320
+#define ST7789_WIDTH    135
+#define ST7789_HEIGHT   240
 #define ST7789_FB_SIZE  ST7789_WIDTH * ST7789_HEIGHT
 
 static const uint ST7789_BAUD = 62500000; // 16ns between SPI rising edges
@@ -110,6 +110,16 @@ typedef enum st7789_cmd
   NVMSET      = 0xFC,
   PROMACT     = 0xFE,
 } st7789_cmd_t;
+
+typedef enum madctl
+{/* option                   bitmask        as opposed to */
+  PAGE_ADDR_BOTTOM_TO_TOP   = 0b1 << 7,   // top to bottom
+  COL_ADDR_RIGHT_TO_LEFT    = 0b1 << 6,   // left to right
+  PAG_COL_REVERSE           = 0b1 << 5,   // normal mode
+  LINE_ADDR_BOTTOM_TO_TOP   = 0b1 << 4,   // top to bottom
+  BIT_ORDER_BGR             = 0b1 << 3,   // (msb) red, green, blue (lsb)
+  DDL_LCD_RIGHT_TO_LEFT     = 0b1 << 2,   // left to right
+} madctl_t;
 
 typedef struct st7789_config
 {

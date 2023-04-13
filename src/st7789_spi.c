@@ -30,6 +30,9 @@ static void st7789_spi_init(st7789_t *st7789)
   gpio_set_function(st7789->pin_sclk, GPIO_FUNC_SPI);
   gpio_set_function(st7789->pin_mosi, GPIO_FUNC_SPI);
 
+  gpio_set_dir(st7789->pin_sclk, GPIO_OUT);
+  gpio_set_dir(st7789->pin_mosi, GPIO_OUT);
+
   spi_init(st7789->spi, ST7789_BAUD);
 }
 
@@ -84,6 +87,16 @@ st7789_t st7789_init(st7789_config_t *config)
   }
 
   st7789_command(&st7789, SWRESET, NULL, 0);
+  
+  st7789_command(&st7789, DISPON, NULL, 0);
+
+  uint16_t caset[2] = { 0, ST7789_WIDTH - 1 };
+  uint16_t raset[2] = { 0, ST7789_HEIGHT - 1 };
+  uint8_t madctl = 0;
+
+  st7789_command(&st7789, CASET, (uint8_t *) &caset, 4);
+  st7789_command(&st7789, RASET, (uint8_t *) &raset, 4);
+  st7789_command(&st7789, MADCTL, &madctl, 1);
 
   return st7789;
 }

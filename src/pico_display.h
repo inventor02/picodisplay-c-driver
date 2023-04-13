@@ -6,6 +6,8 @@
 
 #include "pico/stdlib.h"
 
+#include "st7789_spi.h"
+
 static const uint DEF_PIN_LED_R = 6;
 static const uint DEF_PIN_LED_G = 7;
 static const uint DEF_PIN_LED_B = 8;
@@ -41,7 +43,8 @@ typedef struct pico_display_config_spi
   uint btn_x;
   uint btn_y;
 
-  uint bl_en;
+  bool bl_enab;
+  uint bl;
   uint lcd_mosi;
   uint lcd_sclk;
   uint lcd_cs;
@@ -63,6 +66,7 @@ typedef struct pico_display_led
 typedef struct pico_display
 {
   pico_display_led_t led;
+  st7789_t lcd;
 } pico_display_t;
 
 pico_display_config_spi_t pico_display_get_default_config();

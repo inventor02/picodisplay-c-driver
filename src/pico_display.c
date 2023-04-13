@@ -7,6 +7,7 @@
 #include "hardware/pwm.h"
 
 #include "gamma.h"
+#include "st7789_spi.h"
 
 static void led_pwm_push(pico_display_led_t *led)
 {
@@ -66,9 +67,19 @@ static void btn_init(pico_display_config_spi_t *config)
   btn_init_single(config->btn_y);
 }
 
-static void lcd_init(pico_display_config_spi_t *config)
+static void lcd_init(pico_display_config_spi_t *config, pico_display_t *disp)
 {
+  st7789_config_t conf = {
+    .bl_enab = config->bl_enab,
+    .pin_bl = config->bl,
+    .pin_mosi = config->lcd_mosi,
+    .pin_sclk = config->lcd_sclk,
+    .pin_cs = config->lcd_cs,
+    .pin_wr = config->lcd_wr,
+  };
 
+  st7789_t st7789 = st7789_init(&conf);
+  disp->lcd = st7789;
 }
 
 pico_display_config_spi_t pico_display_get_default_config()
@@ -86,7 +97,8 @@ pico_display_config_spi_t pico_display_get_default_config()
   conf.btn_x = DEF_PIN_BTN_X;
   conf.btn_y = DEF_PIN_BTN_Y;
 
-  conf.bl_en = DEF_PIN_LCD_BL_EN;
+  conf.bl_enab = true;
+  conf.bl = DEF_PIN_LCD_BL_EN;
   conf.lcd_mosi = DEF_PIN_LCD_MOSI;
   conf.lcd_sclk = DEF_PIN_LCD_SCLK;
   conf.lcd_cs = DEF_PIN_LCD_CS;
@@ -109,7 +121,7 @@ pico_display_t pico_display_init(pico_display_config_spi_t *config)
     btn_init(config);
   }
 
-  lcd_init(config);
+  lcd_init(config, &disp);
 
   return disp;
 }

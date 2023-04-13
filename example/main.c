@@ -8,10 +8,11 @@
 int main()
 {
   pico_display_config_spi_t conf = pico_display_get_default_config();
-  conf.bl_en = 26;
+  conf.bl = 26;
   conf.btn_enab = false;
 
   pico_display_t disp = pico_display_init(&conf);
+  st7789_set_backlight(&disp.lcd, 1);
   
   for (;;)
   {
