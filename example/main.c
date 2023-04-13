@@ -12,7 +12,7 @@ int main()
   conf.btn_enab = false;
 
   pico_display_t disp = pico_display_init(&conf);
-  st7789_set_backlight(&disp.lcd, 1);
+  //st7789_set_backlight(&disp.lcd, 1);
   
   for (;;)
   {

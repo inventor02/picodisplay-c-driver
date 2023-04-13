@@ -16,7 +16,7 @@ static void st7789_command(st7789_t *st7789, st7789_cmd_t command, uint8_t data[
 
   spi_write_blocking(st7789->spi, ((uint8_t *) &command), 1);
 
-  if (data && data_len < 0)
+  if (data && data_len > 0)
   {
     gpio_put(st7789->pin_wr, 1);
     spi_write_blocking(st7789->spi, data, data_len);
@@ -38,14 +38,17 @@ static void st7789_spi_init(st7789_t *st7789)
 
 static void st7789_sio_init(st7789_t *st7789)
 {
+  gpio_init(st7789->pin_cs);
+  gpio_init(st7789->pin_wr);
+
   gpio_set_function(st7789->pin_cs, GPIO_FUNC_SIO);
   gpio_set_function(st7789->pin_wr, GPIO_FUNC_SIO);
 
   gpio_set_dir(st7789->pin_cs, GPIO_OUT);
   gpio_set_dir(st7789->pin_wr, GPIO_OUT);
 
-  gpio_pull_up(st7789->pin_cs);
-  gpio_pull_down(st7789->pin_wr);
+  gpio_put(st7789->pin_cs, 1);
+  gpio_put(st7789->pin_wr, 1);
 }
 
 static void st7789_pwm_bl_push(st7789_t *st7789)
@@ -75,7 +78,8 @@ st7789_t st7789_init(st7789_config_t *config)
   st7789.pin_mosi = config->pin_mosi;
   st7789.pin_sclk = config->pin_sclk;
 
-  st7789.bl_enab = config->pin_bl;
+  st7789.bl_enab = config->bl_enab;
+  st7789.pin_bl = config->pin_bl;
   st7789.bl_brightness = ST7789_DEF_BL_BRIGHTNESS;
 
   st7789_spi_init(&st7789);

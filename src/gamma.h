@@ -1,5 +1,5 @@
-#ifndef _GAMMA_H
-#define _GAMMA_H
+#ifndef PDCD_GAMMA_INCLUDED
+#define PDCD_GAMMA_INCLUDED
 
 #include <stdint.h>
 
