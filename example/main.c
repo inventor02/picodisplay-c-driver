@@ -1,3 +1,7 @@
+#include <stdlib.h>
+
+#include "pico/stdlib.h"
+
 #include "pico_display.h"
 #include "st7789_spi.h"
 
@@ -8,7 +12,45 @@ int main()
   conf.btn_enab = false;
 
   pico_display_t disp = pico_display_init(&conf);
-  pico_display_led_set_rgb(&disp, 91, 65, 254);
+  
+  for (;;)
+  {
+    for (int i = 0; i < 255; i++)
+    {
+      pico_display_led_set_rgb(&disp, i, 0, 0);
+      sleep_ms(10);
+    }
+
+    for (int i = 255; i >= 0; i--)
+    {
+      pico_display_led_set_rgb(&disp, i, 0, 0);
+      sleep_ms(10);
+    }
+
+    for (int i = 0; i < 255; i++)
+    {
+      pico_display_led_set_rgb(&disp, 0, i, 0);
+      sleep_ms(10);
+    }
+
+    for (int i = 255; i >= 0; i--)
+    {
+      pico_display_led_set_rgb(&disp, 0, i, 0);
+      sleep_ms(10);
+    }
+
+    for (int i = 0; i < 255; i++)
+    {
+      pico_display_led_set_rgb(&disp, 0, 0, i);
+      sleep_ms(10);
+    }
+
+    for (int i = 255; i >= 0; i--)
+    {
+      pico_display_led_set_rgb(&disp, 0, 0, i);
+      sleep_ms(10);
+    }
+  }
 
   for (;;);
 }
