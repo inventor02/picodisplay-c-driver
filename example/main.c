@@ -9,6 +9,7 @@
 
 int main()
 {
+  stdio_init_all();
   pico_display_config_spi_t conf = pico_display_get_default_config();
 
   pico_display_t disp = pico_display_init(&conf);
@@ -16,7 +17,7 @@ int main()
 
   uint16_t all_red[ST7789_FB_SIZE];
 
-  for (int i = 0; i < ST7789_FB_SIZE; i++) all_red[i] = 0b000000000000000;
+  for (int i = 0; i < ST7789_FB_SIZE; i++) all_red[i] = 0x0af3;
 
   pico_display_lcd_update(&disp, all_red);
   
