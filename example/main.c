@@ -5,14 +5,20 @@
 #include "pico_display.h"
 #include "st7789_spi.h"
 
+#include "bitmaps.h"
+
 int main()
 {
   pico_display_config_spi_t conf = pico_display_get_default_config();
-  conf.bl = 26;
-  conf.btn_enab = false;
 
   pico_display_t disp = pico_display_init(&conf);
-  //st7789_set_backlight(&disp.lcd, 1);
+  st7789_set_backlight(&disp.lcd, 255);
+
+  uint16_t all_red[ST7789_FB_SIZE];
+
+  for (int i = 0; i < ST7789_FB_SIZE; i++) all_red[i] = 0b000000000000000;
+
+  pico_display_lcd_update(&disp, all_red);
   
   for (;;)
   {

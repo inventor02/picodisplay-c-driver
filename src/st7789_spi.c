@@ -59,6 +59,7 @@ static void st7789_pwm_bl_push(st7789_t *st7789)
 static void st7789_pwm_init(st7789_t *st7789)
 {
   gpio_set_function(st7789->pin_bl, GPIO_FUNC_PWM);
+  gpio_set_dir(st7789->pin_bl, GPIO_OUT);
   gpio_pull_down(st7789->pin_bl);
 
   pwm_config pwm_conf = pwm_get_default_config();
@@ -91,16 +92,29 @@ st7789_t st7789_init(st7789_config_t *config)
   }
 
   st7789_command(&st7789, SWRESET, NULL, 0);
+
+  sleep_ms(100);
   
+  st7789_command(&st7789, TEON, NULL, 0);
+  st7789_command(&st7789, COLMOD, "\x05", 1);
+  st7789_command(&st7789, VRHS, "\x12", 1);
+  st7789_command(&st7789, VDVS, "\x20", 1);
+
+  st7789_command(&st7789, SLPOUT, NULL, 0);
+  st7789_command(&st7789, INVON, NULL, 0);
   st7789_command(&st7789, DISPON, NULL, 0);
+
+  sleep_ms(100);
 
   uint16_t caset[2] = { 0, ST7789_WIDTH - 1 };
   uint16_t raset[2] = { 0, ST7789_HEIGHT - 1 };
-  uint8_t madctl = 0;
+  uint8_t madctl = COL_ADDR_RIGHT_TO_LEFT;
 
   st7789_command(&st7789, CASET, (uint8_t *) &caset, 4);
   st7789_command(&st7789, RASET, (uint8_t *) &raset, 4);
   st7789_command(&st7789, MADCTL, &madctl, 1);
+
+  sleep_ms(100);
 
   return st7789;
 }
@@ -109,4 +123,9 @@ void st7789_set_backlight(st7789_t *st7789, uint8_t backlight)
 {
   st7789->bl_brightness = backlight;
   st7789_pwm_bl_push(st7789);
+}
+
+void st7789_set_display(st7789_t *st7789, rgb565_frame_buffer_t buffer)
+{
+  st7789_command(st7789, RAMWR, (uint8_t *) buffer, ST7789_FB_SIZE * sizeof(uint16_t));
 }

@@ -5,6 +5,7 @@
 
 #include "pico/stdlib.h"
 #include "hardware/pwm.h"
+#include "hardware/spi.h"
 
 #include "gamma.h"
 #include "st7789_spi.h"
@@ -70,6 +71,7 @@ static void btn_init(pico_display_config_spi_t *config)
 static void lcd_init(pico_display_config_spi_t *config, pico_display_t *disp)
 {
   st7789_config_t conf = {
+    .spi = spi1,
     .bl_enab = config->bl_enab,
     .pin_bl = config->bl,
     .pin_mosi = config->lcd_mosi,
@@ -138,4 +140,9 @@ void pico_display_led_set_rgb(pico_display_t *display, uint8_t red, uint8_t gree
   display->led.led_g = green;
   display->led.led_b = blue;
   led_pwm_push(&display->led);
+}
+
+void pico_display_lcd_update(pico_display_t *display, rgb565_frame_buffer_t frame_buffer)
+{
+  st7789_set_display(&display->lcd, frame_buffer);
 }

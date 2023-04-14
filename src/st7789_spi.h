@@ -84,7 +84,7 @@ typedef enum st7789_cmd
   IDSET       = 0xC1,
   VDVVRHEN    = 0xC2,
   VRHS        = 0xC3,
-  VDVSET      = 0xC4,
+  VDVS        = 0xC4,
   VCMOFSET    = 0xC5,
   FRCTR2      = 0xC6,
   CABCCTRL    = 0xC7,
@@ -152,5 +152,6 @@ typedef uint16_t rgb565_frame_buffer_t[ST7789_FB_SIZE];
 st7789_t st7789_init(st7789_config_t *config);
 
 void st7789_set_backlight(st7789_t *st7789, uint8_t backlight);
+void st7789_set_display(st7789_t *st7789, rgb565_frame_buffer_t buffer);
 
 #endif
