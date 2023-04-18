@@ -147,3 +147,8 @@ void pico_display_lcd_update(pico_display_t *display, rgb565_frame_buffer_t fram
 {
   st7789_set_display(&display->lcd, frame_buffer);
 }
+
+void pico_display_lcd_set_backlight(pico_display_t *display, uint8_t brightness)
+{
+  st7789_set_backlight(&display->lcd, brightness);
+}

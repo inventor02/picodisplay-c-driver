@@ -79,5 +79,6 @@ void pico_display_led_set_brightness(pico_display_t *display, uint8_t brightness
 void pico_display_led_set_rgb(pico_display_t *display, uint8_t red, uint8_t green, uint8_t blue);
 
 void pico_display_lcd_update(pico_display_t *display, rgb565_frame_buffer_t frame_buffer);
+void pico_display_lcd_set_backlight(pico_display_t *display, uint8_t brightness);
 
 #endif

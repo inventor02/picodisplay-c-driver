@@ -13,3 +13,15 @@ target_link_libraries(${EXAMPLE_NAME}
   hardware_spi
   hardware_pwm
 )
+
+add_executable(squares)
+pico_add_extra_outputs(squares)
+
+target_sources(squares PRIVATE
+  ${CMAKE_CURRENT_LIST_DIR}/squares.c
+)
+
+target_link_libraries(squares
+  pico_stdlib
+  ${DRV_NAME}
+)

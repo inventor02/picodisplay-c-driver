@@ -104,8 +104,8 @@ st7789_t st7789_init(st7789_config_t *config)
 
   sleep_ms(50);
 
-  uint16_t caset_xs = 40;
-  uint16_t caset_xe = 279;
+  uint16_t caset_xs = 52;
+  uint16_t caset_xe = 186;
   uint8_t caset[4] = {
     (caset_xs & 0xff00) >> 8,
     caset_xs & 0x00ff,
@@ -113,15 +113,15 @@ st7789_t st7789_init(st7789_config_t *config)
     caset_xe & 0x00ff
   };
 
-  uint16_t raset_ys = 53;
-  uint16_t raset_ye = 187;
+  uint16_t raset_ys = 40;
+  uint16_t raset_ye = 279;
   uint8_t raset[4] = {
     (raset_ys & 0xff00) >> 8,
     raset_ys & 0x00ff,
     (raset_ye & 0xff00) >> 8,
     raset_ye & 0x00ff
   };
-  uint8_t madctl = MV_PAG_COL_ADDR_ORDER | MY_PAGE_ADDR_ORDER;
+  uint8_t madctl = 0;
 
   st7789_command(&st7789, CASET, caset, 4);
   st7789_command(&st7789, RASET, raset, 4);
