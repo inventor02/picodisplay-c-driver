@@ -13,13 +13,11 @@ int main()
   pico_display_config_spi_t conf = pico_display_get_default_config();
 
   pico_display_t disp = pico_display_init(&conf);
-  st7789_set_backlight(&disp.lcd, 255);
+  st7789_set_backlight(&disp.lcd, 100);
 
-  uint16_t all_red[ST7789_FB_SIZE];
+  pico_display_lcd_update(&disp, HELLO_ST7789);
 
-  for (int i = 0; i < ST7789_FB_SIZE; i++) all_red[i] = 0x0af3;
-
-  pico_display_lcd_update(&disp, all_red);
+  pico_display_led_set_brightness(&disp, 255);
   
   for (;;)
   {

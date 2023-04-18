@@ -5,6 +5,7 @@
 #include <stdint.h>
 
 #include "pico/stdlib.h"
+#include "hardware/spi.h"
 
 #include "st7789_spi.h"
 
@@ -45,6 +46,7 @@ typedef struct pico_display_config_spi
 
   bool bl_enab;
   uint bl;
+  spi_inst_t *spi;
   uint lcd_mosi;
   uint lcd_sclk;
   uint lcd_cs;

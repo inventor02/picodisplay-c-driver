@@ -11,7 +11,7 @@
 #define ST7789_HEIGHT   240
 #define ST7789_FB_SIZE  ST7789_WIDTH * ST7789_HEIGHT
 
-static const uint ST7789_BAUD = 62500000; // 16ns between SPI rising edges
+static const uint32_t ST7789_BAUD = 62500000; // 16ns between SPI rising edges
 static const uint ST7789_BL_PWM_WRAP = 65535;
 
 static const uint ST7789_DEF_BL_BRIGHTNESS = 0;
@@ -112,13 +112,13 @@ typedef enum st7789_cmd
 } st7789_cmd_t;
 
 typedef enum madctl
-{/* option                   bitmask        as opposed to */
-  PAGE_ADDR_BOTTOM_TO_TOP   = 0b1 << 7,   // top to bottom
-  COL_ADDR_RIGHT_TO_LEFT    = 0b1 << 6,   // left to right
-  PAG_COL_REVERSE           = 0b1 << 5,   // normal mode
-  LINE_ADDR_BOTTOM_TO_TOP   = 0b1 << 4,   // top to bottom
-  BIT_ORDER_BGR             = 0b1 << 3,   // (msb) red, green, blue (lsb)
-  DDL_LCD_RIGHT_TO_LEFT     = 0b1 << 2,   // left to right
+{
+  MY_PAGE_ADDR_ORDER      = 0b1 << 7, // 0 top to bottom, 1 bottom to top
+  MX_COL_ADDR_ORDER       = 0b1 << 6, // 0 left to right, 1 right to left
+  MV_PAG_COL_ADDR_ORDER   = 0b1 << 5, // 0 normal mode, 1 reverse mode
+  ML_LINE_ADDR_ORDER      = 0b1 << 4, // 0 top to bottom, 1 bottom to top
+  RGB_RGB_BGR_ORDER       = 0b1 << 3, // 0 rgb, 1 bgr
+  MH_DDL_ORDER            = 0b1 << 2, // 0 left to right, 1 right to left
 } madctl_t;
 
 typedef struct st7789_config

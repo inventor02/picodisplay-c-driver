@@ -9,7 +9,7 @@
 
 #include "gamma.h"
 
-static void st7789_command(st7789_t *st7789, st7789_cmd_t command, uint8_t data[], size_t data_len)
+static void st7789_command(st7789_t *st7789, st7789_cmd_t command, uint8_t *data, size_t data_len)
 {
   gpio_put(st7789->pin_wr, 0);
   gpio_put(st7789->pin_cs, 0);
@@ -23,17 +23,15 @@ static void st7789_command(st7789_t *st7789, st7789_cmd_t command, uint8_t data[
   }
 
   gpio_put(st7789->pin_cs, 1);
+  gpio_put(st7789->pin_wr, 0);
 }
 
 static void st7789_spi_init(st7789_t *st7789)
 {
+  spi_init(st7789->spi, ST7789_BAUD);
+
   gpio_set_function(st7789->pin_sclk, GPIO_FUNC_SPI);
   gpio_set_function(st7789->pin_mosi, GPIO_FUNC_SPI);
-
-  gpio_set_dir(st7789->pin_sclk, GPIO_OUT);
-  gpio_set_dir(st7789->pin_mosi, GPIO_OUT);
-
-  spi_init(st7789->spi, ST7789_BAUD);
 }
 
 static void st7789_sio_init(st7789_t *st7789)
@@ -97,22 +95,36 @@ st7789_t st7789_init(st7789_config_t *config)
   
   st7789_command(&st7789, TEON, NULL, 0);
   st7789_command(&st7789, COLMOD, "\x05", 1);
-  st7789_command(&st7789, VRHS, "\x12", 1);
-  st7789_command(&st7789, VDVS, "\x20", 1);
 
   sleep_ms(50);
 
+  st7789_command(&st7789, INVON, NULL, 0);
   st7789_command(&st7789, SLPOUT, NULL, 0);
   st7789_command(&st7789, DISPON, NULL, 0);
 
-  sleep_ms(150);
+  sleep_ms(50);
 
-  uint16_t caset[2] = { __builtin_bswap16((uint16_t)40), __builtin_bswap16((uint16_t)279) };
-  uint16_t raset[2] = { __builtin_bswap16((uint16_t)53), __builtin_bswap16((uint16_t)187) };
-  uint8_t madctl = PAGE_ADDR_BOTTOM_TO_TOP | PAG_COL_REVERSE | LINE_ADDR_BOTTOM_TO_TOP;
+  uint16_t caset_xs = 40;
+  uint16_t caset_xe = 279;
+  uint8_t caset[4] = {
+    (caset_xs & 0xff00) >> 8,
+    caset_xs & 0x00ff,
+    (caset_xe & 0xff00) >> 8,
+    caset_xe & 0x00ff
+  };
 
-  st7789_command(&st7789, CASET, (uint8_t *) caset, 4);
-  st7789_command(&st7789, RASET, (uint8_t *) raset, 4);
+  uint16_t raset_ys = 53;
+  uint16_t raset_ye = 187;
+  uint8_t raset[4] = {
+    (raset_ys & 0xff00) >> 8,
+    raset_ys & 0x00ff,
+    (raset_ye & 0xff00) >> 8,
+    raset_ye & 0x00ff
+  };
+  uint8_t madctl = MV_PAG_COL_ADDR_ORDER | MY_PAGE_ADDR_ORDER;
+
+  st7789_command(&st7789, CASET, caset, 4);
+  st7789_command(&st7789, RASET, raset, 4);
   st7789_command(&st7789, MADCTL, &madctl, 1);
 
   sleep_ms(150);

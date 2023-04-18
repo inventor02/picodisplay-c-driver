@@ -71,7 +71,7 @@ static void btn_init(pico_display_config_spi_t *config)
 static void lcd_init(pico_display_config_spi_t *config, pico_display_t *disp)
 {
   st7789_config_t conf = {
-    .spi = spi1,
+    .spi = config->spi,
     .bl_enab = config->bl_enab,
     .pin_bl = config->bl,
     .pin_mosi = config->lcd_mosi,
@@ -101,6 +101,7 @@ pico_display_config_spi_t pico_display_get_default_config()
 
   conf.bl_enab = true;
   conf.bl = DEF_PIN_LCD_BL_EN;
+  conf.spi = spi0;
   conf.lcd_mosi = DEF_PIN_LCD_MOSI;
   conf.lcd_sclk = DEF_PIN_LCD_SCLK;
   conf.lcd_cs = DEF_PIN_LCD_CS;

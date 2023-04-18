@@ -10,4 +10,6 @@ target_sources(${EXAMPLE_NAME} PRIVATE
 target_link_libraries(${EXAMPLE_NAME}
   pico_stdlib
   ${DRV_NAME}
+  hardware_spi
+  hardware_pwm
 )
