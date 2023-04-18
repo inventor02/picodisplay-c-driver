@@ -11,7 +11,7 @@
 #define ST7789_HEIGHT   240
 #define ST7789_FB_SIZE  ST7789_WIDTH * ST7789_HEIGHT
 
-static const uint32_t ST7789_BAUD = 62500000; // 16ns between SPI rising edges
+static const uint32_t ST7789_BAUD = 40000000; // 40Mbps
 static const uint ST7789_BL_PWM_WRAP = 65535;
 
 static const uint ST7789_DEF_BL_BRIGHTNESS = 0;
