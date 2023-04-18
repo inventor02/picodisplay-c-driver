@@ -10,6 +10,11 @@ This project was undertaken as part of the coursework for the Computer Systems I
 
 Contributions are more than welcome, please submit a pull request.
 
+## Usage
+
+A basic example is available in the `example` directory. I may at some point provide some further documentation if I get
+the time.
+
 ## License
 
 This driver is copyright (c) 2023 George Peppard and University of Southampton and is licensed under the ISC license. A
