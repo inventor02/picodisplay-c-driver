@@ -51,7 +51,7 @@ static void st7789_sio_init(st7789_t *st7789)
 
 static void st7789_pwm_bl_push(st7789_t *st7789)
 {
-  pwm_set_gpio_level(st7789->pin_bl, ((uint16_t) ST7789_GAMMA_LUT_8[st7789->bl_brightness]) * ST7789_BL_PWM_WRAP);
+  pwm_set_gpio_level(st7789->pin_bl, ST7789_GAMMA_LUT_8[st7789->bl_brightness]);
 }
 
 static void st7789_pwm_init(st7789_t *st7789)

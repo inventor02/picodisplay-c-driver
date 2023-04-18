@@ -13,7 +13,7 @@ int main()
   pico_display_config_spi_t conf = pico_display_get_default_config();
 
   pico_display_t disp = pico_display_init(&conf);
-  st7789_set_backlight(&disp.lcd, 100);
+  st7789_set_backlight(&disp.lcd, 255);
 
   pico_display_lcd_update(&disp, HELLO_ST7789);
 
